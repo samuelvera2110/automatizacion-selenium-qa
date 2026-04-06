@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="QA Automation Suite" verbose="1" parallel="none">
+
+    <listeners>
+        <listener class-name="com.example.report.ExtentTestListener"/>
+    </listeners>
+
+    <test name="OpenCart Tests">
+        <classes>
+            <class name="com.example.opencart.AddProductsTest"/>
+            <class name="com.example.opencart.ViewCartTest"/>
+            <class name="com.example.opencart.GuestCheckoutTest"/>
+            <class name="com.example.opencart.OrderConfirmationTest"/>
+        </classes>
+    </test>
+    
+    <test name="ParaBank Tests">
+        <classes>
+            <class name="com.example.parabank.LoginTest"/>
+            <class name="com.example.parabank.RegisterTest"/>
+            <class name="com.example.parabank.TransferTest"/>
+            <class name="com.example.parabank.WithdrawalTest"/>
+        </classes>
+    </test>
+
+</suite>
