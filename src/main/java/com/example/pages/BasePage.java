@@ -17,11 +17,11 @@ public abstract class BasePage {
     protected final Actions actions;
 
     private static final Duration DEFAULT_TIMEOUT = Duration.ofSeconds(10);
-    private static final Duration LONG_TIMEOUT    = Duration.ofSeconds(30);
+    private static final Duration LONG_TIMEOUT = Duration.ofSeconds(30);
 
     protected BasePage() {
-        this.driver  = DriverManager.getDriver();
-        this.wait    = new WebDriverWait(driver, DEFAULT_TIMEOUT);
+        this.driver = DriverManager.getDriver();
+        this.wait = new WebDriverWait(driver, DEFAULT_TIMEOUT);
         this.actions = new Actions(driver);
         PageFactory.initElements(driver, this);
     }
@@ -249,10 +249,10 @@ public abstract class BasePage {
         }
     }
 
-    protected void pause(long ms){
-        try{
+    protected void pause(long ms) {
+        try {
             Thread.sleep(ms);
-        }catch (InterruptedException e){
+        } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             throw new RuntimeException("La pausa fue interrumpida", e);
         }
@@ -291,5 +291,10 @@ public abstract class BasePage {
         new WebDriverWait(driver, Duration.ofSeconds(15))
                 .until(ExpectedConditions.textToBePresentInElementLocated(
                         locator, expectedZone));
+    }
+
+    /** Espera explícitamente a que el elemento sea visible. */
+    protected void waitForVisibility(By locator) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 }

@@ -13,12 +13,11 @@ public class TransferFundsPage extends BasePage {
 
     public TransferFundsPage() { super(); }
 
-    public void transfer(String amount, int fromAccountIndex, int toAccountIndex) {
+    public void transfer(String amount, String fromAccount, String toAccount) {
         pause(1000);
-
         type(amountInput, amount);
-        selectByIndex(fromAccountIdSelect, fromAccountIndex);
-        selectByIndex(toAccountIdSelect, toAccountIndex);
+        selectByValue(fromAccountIdSelect, fromAccount);
+        selectByValue(toAccountIdSelect, toAccount);
         click(transferButton);
     }
 

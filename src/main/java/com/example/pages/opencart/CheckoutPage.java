@@ -23,8 +23,7 @@ public class CheckoutPage extends BasePage {
     private final By termsCheckbox       = By.xpath("//input[@name='agree']");
     private final By continueStep5Button = By.id("button-payment-method");
     private final By confirmOrderButton  = By.id("button-confirm");
-    private final By orderConfirmationHeading =
-            By.xpath("//h1[contains(text(),'Your order has been placed!')]");
+    
 
     public CheckoutPage() {
         super();

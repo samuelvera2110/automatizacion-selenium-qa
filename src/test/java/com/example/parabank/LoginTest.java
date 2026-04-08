@@ -1,6 +1,8 @@
 package com.example.parabank;
 
 import com.example.pages.parabank.AccountOverviewPage;
+import com.example.pages.parabank.RegisterPage;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -8,19 +10,25 @@ public class LoginTest extends BaseTest{
 
     @Test
     public void testLoginSuccess() {
-        String user = "samuel_dev_705a548b";
-        String pass = "Pass123";
+       
+        RegisterPage registerPage = homePage.clickRegister();
+
+        registerPage.fillRegisterForm("Samuel", "Vera", "Ecuador", "Guayaquil","Guayas", "090101", "099999", "123", username, password);
+
+        registerPage.submitForm();
+
+        homePage.logout();
 
         homePage.utilPause(1500);
 
-        AccountOverviewPage overviewPage = homePage.login(user, pass);
+        AccountOverviewPage overviewPage = login();
 
         String expectedTitle = "Accounts Overview";
         String actualTitle = overviewPage.getTitleText();
 
         Assert.assertEquals(actualTitle, expectedTitle, "El login falló.");
 
-        System.out.println("Login exitoso con el usuario: " + user);
+        System.out.println("Login exitoso con el usuario: " + username);
     }
 
 }

@@ -11,6 +11,8 @@ public class HomePage extends BasePage {
     private final By passwordInput = By.name("password");
     private final By loginButton   = By.xpath("//input[@value='Log In']");
 
+    private final By logout = By.xpath("//*[@id=\"leftPanel\"]/ul/li[8]/a");
+
     public HomePage() {
         super();
     }
@@ -29,6 +31,10 @@ public class HomePage extends BasePage {
 
     public void utilPause(long ms){
         pause(ms);
+    }
+
+    public void logout(){
+        click(logout);
     }
 
 }

@@ -10,9 +10,6 @@ public class HomePage extends BasePage {
     private final By cartTotalButton = By.id("cart-total");
     private final By successMessage = By.cssSelector(".alert-success");
 
-    private final By cartButtonContainer = By.id("cart");
-    private final By viewCartLink = By.xpath("//strong[contains(.,'View Cart')]");
-
     public HomePage() {
         super();
     }

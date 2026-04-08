@@ -6,7 +6,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.sql.Driver;
 
 public class AddProductsTest extends BaseTest {
 

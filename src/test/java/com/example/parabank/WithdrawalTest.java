@@ -2,22 +2,31 @@ package com.example.parabank;
 
 import com.example.pages.parabank.AccountOverviewPage;
 import com.example.pages.parabank.BillPayPage;
+import com.example.pages.parabank.RegisterPage;
+import com.example.utils.DataGenerator;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class WithdrawalTest extends BaseTest{
+public class WithdrawalTest extends BaseTest {
 
     @Test
     public void testWithdrawalSuccess() {
 
-        AccountOverviewPage overviewPage = homePage.login("samuel_dev_705a548b", "Pass123");
+        RegisterPage registerPage = homePage.clickRegister();
 
-        BillPayPage billPayPage = overviewPage.goToBillPay();
+        registerPage.fillRegisterForm(
+                "Samuel", "Vera", "Ecuador", "Guayaquil",
+                "Guayas", "090101", "099999", "123",
+                username, password);
+
+        registerPage.submitForm();
+
+        BillPayPage billPayPage = new AccountOverviewPage().goToBillPay();
 
         billPayPage.fillBillPayForm(
                 "Servicios Varios", "Av. Principal 123", "Guayaquil", "Guayas",
-                "090101", "0987654321", "12345", "100.00"
-        );
+                "090101", "0987654321", "12345", "100.00");
 
         billPayPage.submitPayment();
 
