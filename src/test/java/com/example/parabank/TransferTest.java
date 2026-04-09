@@ -22,18 +22,18 @@ public class TransferTest extends BaseTest {
         registerPage.submitForm();
 
         AccountOverviewPage overviewPage = new AccountOverviewPage();
-        
+
         OpenNewAccountPage openAccountPage = overviewPage.goToOpenNewAccount();
-       
+
         openAccountPage.openAccount("SAVINGS");
-        
+
         String fromAccountId = openAccountPage.getFromAccountId();
         String toAccountId = openAccountPage.getNewAccountId();
-        
+
         TransferFundsPage transferPage = overviewPage.goToTransferFunds();
-        
+
         transferPage.transfer("500", fromAccountId, toAccountId);
-        
+
         Assert.assertEquals(transferPage.getResultTitle(), "Transfer Complete!");
 
     }

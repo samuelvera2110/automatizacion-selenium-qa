@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b85f97c8-e2ee-47fd-b61d-c66983bb5146" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/parabank/BaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/parabank/BaseTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/parabank/TransferTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/parabank/TransferTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/parabank/WithdrawalTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/parabank/WithdrawalTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/petstore/ApiRunner.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/petstore/petstore.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/reqres/ApiRunner.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/reqres/usuarios.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/pages/parabank/AccountOverviewPage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/pages/parabank/AccountOverviewPage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/pages/parabank/OpenNewAccountPage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/pages/parabank/OpenNewAccountPage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/extent-reports/Automation-Report-2026-04-08_14-06-55.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TestSuite.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TestSuite.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/example/parabank/BaseTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/example/parabank/BaseTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/example/parabank/TransferTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/example/parabank/TransferTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/example/parabank/WithdrawalTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/example/parabank/WithdrawalTest.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="3C7pJJQpr0lZOg1clCEAtg7ZxcT" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="false" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/JOSIAS/Desktop/Archivos/GIT_PROYECTOS/automatizacion-selenium-qa"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\JOSIAS\Desktop\Archivos\GIT_PROYECTOS\automatizacion-selenium-qa\src\test\resources\features" />
+      <recent name="C:\Users\JOSIAS\Desktop\Archivos\GIT_PROYECTOS\automatizacion-selenium-qa\src\test\resources\features\opencart\parabank" />
+    </key>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b85f97c8-e2ee-47fd-b61d-c66983bb5146" name="Changes" comment="" />
+      <created>1775746390968</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1775746390968</updated>
+    </task>
+    <servers />
+  </component>
+</project>
