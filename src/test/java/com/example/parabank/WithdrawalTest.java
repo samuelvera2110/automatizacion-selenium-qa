@@ -3,7 +3,6 @@ package com.example.parabank;
 import com.example.pages.parabank.AccountOverviewPage;
 import com.example.pages.parabank.BillPayPage;
 import com.example.pages.parabank.RegisterPage;
-import com.example.utils.DataGenerator;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;

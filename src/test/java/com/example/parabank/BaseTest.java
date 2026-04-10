@@ -4,9 +4,7 @@ import com.example.driver.DriverManager;
 import com.example.pages.parabank.AccountOverviewPage;
 import com.example.pages.parabank.HomePage;
 import com.example.utils.DataGenerator;
-import com.intuit.karate.driver.Driver;
 
-import org.openqa.selenium.By;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 

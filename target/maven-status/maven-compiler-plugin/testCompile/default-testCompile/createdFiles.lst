@@ -3,13 +3,11 @@ com\example\report\ExtentReportManager.class
 com\example\parabank\TransferTest.class
 com\example\report\ExtentTestListener.class
 com\example\opencart\BaseTest.class
-com\example\petstore\ApiRunner.class
 com\example\report\ExtentTestContext.class
 com\example\parabank\BaseTest.class
 com\example\report\ScreenshotUtil.class
 com\example\parabank\RegisterTest.class
 com\example\opencart\OrderConfirmationTest.class
-com\example\reqres\ApiRunner.class
 com\example\opencart\GuestCheckoutTest.class
 com\example\opencart\ViewCartTest.class
 com\example\parabank\LoginTest.class

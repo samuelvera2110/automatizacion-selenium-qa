@@ -15,5 +15,6 @@ com\example\pages\opencart\OrderConfirmationPage.class
 com\example\pages\opencart\HomePage.class
 com\example\pages\parabank\RegisterPage.class
 com\example\App.class
+com\example\driver\DriverManager$1.class
 com\example\driver\IDriverFactory.class
 com\example\pages\parabank\HomePage.class
