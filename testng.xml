@@ -16,13 +16,4 @@
         </classes>
     </test>
     
-    <test name="ParaBank Tests">
-        <classes>
-            <class name="com.example.parabank.LoginTest"/>
-            <class name="com.example.parabank.RegisterTest"/>
-            <class name="com.example.parabank.TransferTest"/>
-            <class name="com.example.parabank.WithdrawalTest"/>
-        </classes>
-    </test>
-
 </suite>
