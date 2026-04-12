@@ -1,0 +1,157 @@
+================================================================================
+  Samuel Vera - Automatización E2E
+  Conclusiones y Hallazgos del Ejercicio
+  Assessment 2026
+================================================================================
+
+
+1. DECISIONES DE DISEÑO
+------------------------
+
+1.1 Stack seleccionado: Selenium WebDriver + TestNG + Cucumber
+  Se automatizó con Selenium 4 sobre Java 17, usando TestNG como motor de
+  ejecución y Cucumber para escenarios legibles en Gherkin. Esta combinación
+  separa la especificación del comportamiento (features) de la implementación
+  técnica (step definitions y Page Objects), sin depender de un framework BDD
+  adicional como Serenity.
+
+1.2 Patrón de diseño: Page Object Model (POM)
+  Se aplicó POM con una clase abstracta BasePage compartida que centraliza
+  esperas explícitas (WebDriverWait), interacciones comunes y PageFactory.
+  Las páginas de ParaBank y OpenCart extienden BasePage y encapsulan locators
+  (By) y acciones por pantalla, manteniendo los escenarios y los tests
+  enfocados en el flujo y las aserciones.
+
+1.3 Gestión del WebDriver: DriverManager + Factory + ThreadLocal
+  DriverManager mantiene el WebDriver en un ThreadLocal para aislar el estado
+  entre hilos y exponer un ciclo de vida claro (initDriver / getDriver /
+  quitDriver). La creación del navegador se delega a una fábrica (por ejemplo
+  ChromeDriverFactory) que recibe las opciones vía ChromeOptionsBuilder,
+  facilitando extender a otros navegadores en el futuro.
+
+1.4 Descarga y versionado del ChromeDriver: WebDriverManager
+  En ChromeDriverFactory se invoca WebDriverManager.chromedriver().setup(),
+  lo que alinea el driver con la versión de Chrome instalada y reduce fricción
+  al configurar máquinas nuevas o pipelines.
+
+1.5 Reportes: ExtentReports + capturas en listener de TestNG
+  ExtentTestListener (ITestListener) registra cada método de prueba, adjunta
+  capturas en base64 al pasar o fallar y hace flush al finalizar el contexto.
+  Esto aporta evidencia visual sin la capa de reporte de Serenity, integrada
+  directamente con el ciclo de vida de TestNG.
+
+1.6 Cucumber en español
+  Los step definitions usan io.cucumber.java.es (Dado, Cuando, Entonces) y los
+  archivos .feature están redactados en español, alineados con stakeholders
+  hispanohablantes y con la directiva de idioma en los escenarios.
+
+
+2. HALLAZGOS DURANTE LA IMPLEMENTACIÓN
+----------------------------------------
+
+2.1 Entornos públicos (ParaBank y OpenCart)
+  Al ejecutar contra sitios de demostración en internet pueden aparecer
+  latencias variables, mantenimientos o saturación compartida. BasePage
+  concentra timeouts por defecto (10 s) y operaciones de espera reutilizables,
+  lo que mitiga parte de la flakiness típica de Selenium en la web abierta.
+
+2.2 Datos de prueba dinámicos (DataGenerator)
+  ParaBank es un entorno compartido: usuarios fijos colisionan entre
+  ejecuciones. Se generan username y password con prefijos y fragmentos de
+  UUID para obtener valores únicos por corrida, reduciendo fallos por cuenta
+  ya existente.
+
+2.3 Dos formas de ejecución: tests TestNG y runners Cucumber
+  Existen pruebas clásicas bajo com.example.parabank y com.example.opencart
+  además de runners Cucumber (testng-bdd.xml con ParabankRunner y
+  OpencartRunner). Conviene documentar claramente qué suite XML usar en cada
+  caso para que el equipo no mezcle expectativas de reporte o alcance.
+
+2.4 coherencia de BasePage entre suites
+  A diferencia de escenarios donde solo una suite hereda de una base común,
+  aquí ParaBank y OpenCart reutilizan la misma BasePage, lo que unifica
+  esperas y utilidades y evita duplicar lógica de bajo nivel en cada página.
+
+2.5 Listener Extent y paralelismo
+  El listener asocia ExtentTest a cada método vía ThreadLocal en
+  ExtentTestContext. Si en el futuro se habilita paralelismo en TestNG, habrá
+  que revisar que el modelo de contexto y flush siga siendo seguro entre hilos.
+
+
+3. RESULTADOS DE LAS PRUEBAS
+------------------------------
+
+Suite ParaBank (escenarios Cucumber, carpeta features/parabank):
+  - register.feature     : Registro de usuario con datos generados
+  - login.feature        : Inicio de sesión con credenciales del escenario
+  - transfer.feature     : Apertura de cuenta y transferencia entre cuentas
+  - withdrawal.feature   : Flujo de retiro / pago de factura según escenario
+
+Suite OpenCart (escenarios Cucumber, carpeta features/opencart):
+  - agregar_productos.feature   : Agregar productos al carrito
+  - ver_carrito.feature         : Verificar contenido del carrito
+  - checkout_invitado.feature   : Checkout como invitado
+  - confirmar_orden.feature     : Verificar confirmación de pedido
+
+Los reportes HTML de ExtentReports se generan bajo target/extent-reports/
+cuando se ejecutan las pruebas con el listener configurado en la suite TestNG.
+
+
+4. BUENAS PRÁCTICAS APLICADAS
+-------------------------------
+
+  Principios y estructura:
+  - Separación de capas: features → steps → pages → driver
+  - POM con BasePage reutilizable y Page Objects por aplicación (paquetes
+    parabank y opencart)
+  - Configuración de dependencias en pom.xml (versiones explícitas de
+    Selenium, TestNG, Cucumber, WebDriverManager y ExtentReports)
+
+  Automatización web:
+  - Locators como constantes By en las páginas, encapsulados en la clase
+    correspondiente
+  - Uso de esperas explícitas en lugar de sleeps arbitrarios salvo casos
+    puntuales documentados
+  - Limpieza del driver en @After / @AfterMethod para liberar recursos
+
+  Legibilidad:
+  - Gherkin y glue en español para facilitar revisión funcional
+
+
+5. LECCIONES APRENDIDAS
+------------------------
+
+  a) Los sitios de demostración pública son poco predecibles: combinar buenas
+     esperas, datos únicos y, cuando aplique, reintentos selectivos en pasos
+     críticos mejora la confiabilidad sin ocultar defectos reales del SUT.
+
+  b) WebDriverManager reduce mucho el costo operativo de mantener drivers
+     compatibles con el navegador del entorno de ejecución.
+
+  c) Unificar interacción con el navegador en BasePage y el ciclo de vida en
+     DriverManager simplifica el mantenimiento cuando crecen las suites.
+
+  d) ExtentReports integrado con TestNG ofrece trazabilidad y capturas con una
+     curva de adopción razonable para equipos que ya usan TestNG.
+
+  e) Tener dos entradas de ejecución (tests directos y BDD) exige disciplina en
+     la documentación del comando Maven (-DsuiteFile=...) para que cada
+     corrida sea reproducible.
+
+
+6. MEJORAS IDENTIFICADAS PARA PRÓXIMAS ITERACIONES
+----------------------------------------------------
+
+  - Alinear el README con los archivos suite reales (testng.xml vs testng-bdd.xml)
+    y, si aplica, ofrecer suites separadas por producto en XML dedicados
+  - Habilitar modo headless parametrizable de forma consistente en CI/CD
+  - Introducir tags Cucumber (@smoke, @regression) y filtros en los runners
+  - Integrar ejecución automática (por ejemplo GitHub Actions) con artefactos
+    de target/extent-reports publicados o archivados
+  - Ampliar cobertura con Scenario Outline y tablas de ejemplos
+  - Evaluar reintentos o backoff solo en operaciones conocidamente inestables
+    (p. ej. creación de cuenta en ParaBank), con trazas claras en el reporte
+  - Unificar nomenclatura en paquetes/clases (p. ej. steps de OpenCart) para
+    facilitar navegación y revisiones de código
+
+================================================================================

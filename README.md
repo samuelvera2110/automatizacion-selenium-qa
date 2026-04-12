@@ -1,138 +1,112 @@
-Samuel Vera - Automatización E2E Serenity BDD + Cucumber + Selenium (2026)
---------------------------------------------------------------------------
-DESCRIPCIÓN
------------
-Proyecto de automatización E2E con dos suites de pruebas independientes:
-1. ParaBank  (https://parabank.parasoft.com)
-     - Registro de usuario
-     - Login
-     - Transferencia de fondos entre cuentas
-     - Pago de facturas
+# Automatización E2E — Selenium, TestNG, Cucumber
 
-  2. OpenCart  (https://opencart.abstracta.us)
-     - Agregar productos al carrito
-     - Visualizar carrito
-     - Checkout como invitado
-     - Confirmación de compra
+**Samuel Vera · 2026**
 
-PRERREQUISITOS
---------------
-Antes de ejecutar el proyecto, asegúrese de tener instalado:
- 1. Java Development Kit (JDK) 17 o superior
-     Verificar: java -version
-     Descargar: https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
+Proyecto Maven (`prueba-qa`) de pruebas end-to-end sobre **Selenium WebDriver 4**, **TestNG**, **Cucumber** y reportes **ExtentReports**. La gestión del **ChromeDriver** la resuelve **WebDriverManager** (Boni García).
 
-  2. Apache Maven 3.9 +
-     Verificar: mvn -version
-     Descargar: https://maven.apache.org/download.cgi?.
+---
 
-  3. Google Chrome (versión reciente)
-     El proyecto usa WebDriverManager de Bonnie Garcia, descarga el driver instalado recientemente.
+## Aplicaciones bajo prueba
 
-  4. Conexión a internet activa
-     Las pruebas acceden a sitios en línea:
-       - https://parabank.parasoft.com
-       - https://opencart.abstracta.us
+| Aplicación | URL usada en código | Casos cubiertos (resumen) |
+|------------|---------------------|---------------------------|
+| **ParaBank** | [parabank.parasoft.com](https://parabank.parasoft.com/parabank/index.htm) | Registro, login, transferencia entre cuentas, pago de facturas |
+| **OpenCart** | [opencart.abstracta.us](http://opencart.abstracta.us/index.php?route=common/home) | Carrito, checkout invitado, confirmación de pedido |
 
-  5. Variables de entorno configuradas:
-     - JAVA_HOME apuntando al directorio de instalación del JDK
-     - Maven en el PATH del sistema
+> OpenCart se navega con **HTTP** en `BaseTest`; ParaBank con **HTTPS**.
 
+---
 
-ESTRUCTURA DEL PROYECTO
-------------------------
-C:.
-├── src/
-│
-│   ├── main/
-│   │   └── java/
-│   │       └── com/example/
-│   │
-│   │           ├── driver/   → Gestión de WebDriver (núcleo del framework)
-│   │           │               - DriverManager: ciclo de vida del driver
-│   │           │               - DriverFactory: creación de drivers (Factory Pattern)
-│   │           │               - OptionsBuilder: configuración de navegadores
-│   │
-│   │           ├── pages/    → Implementación del patrón POM (Page Object Model)
-│   │           │
-│   │           │   ├── opencart/  
-│   │           │   │             → Páginas de la aplicación OpenCart
-│   │           │   │               (login, home, productos, etc.)
-│   │           │   │
-│   │           │   └── parabank/  
-│   │           │                 → Páginas de la aplicación ParaBank
-│   │           │                   (cuentas, transferencias, login, etc.)
-│   │
-│   │           └── utils/    → Clases utilitarias reutilizables
-│   │                           (config, screenshots, etc.)
-│
-│   └── test/
-│       ├── java/
-│       │   └── com/example/
-│       │
-│       │       ├── opencart/
-│       │       │
-│       │       │   ├── runner/  
-│       │       │   │           → Ejecutores para escenarios de ParaBank
-│       │       │   │
-│       │       │   └── steps/   → Steps de Cucumber para ParaBank
-│       │       │
-│       │       ├── parabank/
-│       │       │
-│       │       │   ├── runner/  → Ejecutores para escenarios de ParaBank
-│       │       │   └── steps/   → Steps de Cucumber para ParaBank
-│       │       │
-│       │       └── report/  
-│       │                   → Configuración y generación de reportes
-│       │                   
-│
-│       └── resources/
-│           └── features/
-│
-│               ├── opencart/  
-│               │             → Archivos .feature de OpenCart
-│               │
-│               └── parabank/  
-│                             → Features de ParaBank
+## Requisitos
 
+1. **JDK 17+** — `java -version`  
+   [Descargas JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+2. **Apache Maven 3.9+** — `mvn -version`  
+   [Descargar Maven](https://maven.apache.org/download.cgi)
+3. **Google Chrome** (reciente). El driver se alinea automáticamente vía WebDriverManager.
+4. **Internet** activa (los SUT son sitios públicos).
+5. **JAVA_HOME** y **Maven en el PATH**.
 
-INSTRUCCIONES DE EJECUCIÓN
----------------------------
-PASO 1: Clonar o descomprimir el repositorio
---------------------------------------------
-Opción A: Descarga el archivo .zip, descromprime en una carpeta local
-Opción B: Clona el proyecto en Git con la instrucción:
-          git clone <url_repositorio>
+---
 
-PASO 2: Navegar al directorio raíz del proyecto
-------------------------------------------------
-Abra una terminal (CMD, PowerShell o bash) y ejecute:
-    cd "ruta/al/proyecto/automatizacion-selenium-qa"
+## Tecnologías principales
 
-PASO 3: Compilar el proyecto
-----------------------------
-    mvn compile test-compile
+- Java 17, Selenium 4.21, TestNG 7.10, Cucumber 7.15  
+- WebDriverManager 5.8  
+- ExtentReports 5.1 (listener TestNG + capturas en pass/fail)  
+- Patrón **Page Object** con `BasePage` común (`com.example.pages.BasePage`)
 
-PASO 4: Ejecutar las pruebas
-----------------------------
-Opción A - Ejecutar AMBAS suites (ParaBank + OpenCart):
-  mvn clean test
+---
 
-Opción B - Ejecutar solo la suite ParaBank:
-  mvn clean test "-DsuiteFile=testng-parabank.xml"
+## Estructura del código
 
-Opción C - Ejecutar solo la suite OpenCart:
-  mvn clean test "-DsuiteFile=testng-opencart.xml"
+```
+src/main/java/com/example/
+├── driver/          # DriverManager (ThreadLocal), ChromeDriverFactory, opciones
+├── pages/           # POM: BasePage + subpaquetes opencart/ y parabank/
+└── utils/           # DataGenerator, etc.
 
-Opción D - Ejecutar archivos .feature
-  mvn test "-DsuiteFile=testng-cucumber.xml"
+src/test/java/com/example/
+├── opencart/        # Tests TestNG + runner/ + steps/ (Cucumber)
+├── parabank/        # Tests TestNG + runner/ + steps/ (Cucumber)
+└── report/          # ExtentReports, listener, capturas
 
-PASO 5: Visualizar los reportes
---------------------------------
-  Los reportes se generan en la carpeta target/extent-reports:
-    Para los test: archivo.html
-  Los reportes de los archivos .feature se generan en archivos .html por separado
+src/test/resources/features/
+├── opencart/        # .feature OpenCart
+└── parabank/      # .feature ParaBank
+```
 
-  
+Los escenarios **Gherkin** y los *step definitions* (`io.cucumber.java.es`) están en **español**.
 
+---
 
+## Cómo ejecutar
+
+Desde la raíz del repositorio:
+
+```bash
+cd automatizacion-selenium-qa
+mvn compile test-compile
+```
+
+### Suites TestNG (`suiteFile` en `pom.xml`)
+
+La propiedad Maven **`suiteFile`** apunta al XML de TestNG (por defecto `testng.xml`).
+
+| Comando | Contenido |
+|---------|-----------|
+| `mvn clean test` | **`testng.xml`**: pruebas **TestNG solo OpenCart** (4 clases). |
+| `mvn clean test "-DsuiteFile=testng-parabank.xml"` | Pruebas **TestNG solo ParaBank** (registro, login, transferencia, retiro). |
+| `mvn clean test "-DsuiteFile=testng-bdd.xml"` | **Cucumber**: runners **OpenCart** y **ParaBank** (`.feature`). |
+
+**Windows (PowerShell):** las comillas alrededor de `-DsuiteFile=...` son importantes.
+
+### Clonar el repositorio
+
+```bash
+git clone <url-del-repositorio>
+cd automatizacion-selenium-qa
+```
+
+---
+
+## Reportes
+
+Tras una ejecución con el **ExtentTestListener** activo en la suite, los HTML se generan en:
+
+`target/extent-reports/`
+
+Cada corrida puede crear un informe con marca de tiempo. La carpeta **`target/`** está ignorada por Git (véase `.gitignore`).
+
+---
+
+## Documentación adicional
+
+- **`conclusiones.txt`**: decisiones de diseño, hallazgos y mejoras propuestas (assessment).
+
+---
+
+## Notas
+
+- Los entornos de demostración son **compartidos e inestables**; conviene re-ejecutar ante fallos intermitentes.
+- Los usuarios de prueba en ParaBank se generan de forma **dinámica** (`DataGenerator`) para evitar colisiones.
